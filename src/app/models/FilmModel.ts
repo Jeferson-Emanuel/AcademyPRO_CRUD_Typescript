@@ -1,7 +1,40 @@
-import {DataTypes, Model} from 'sequelize';
+import {DataTypes, Model, Optional} from 'sequelize';
 import {sequelize} from '../../database/sequelize';
 
-class Film extends Model {}
+export interface FilmAttibutes {
+    film_id: number;
+    title: string;
+    description: string;
+    release_year: string;
+    language_id: string;
+    rental_duration: string;
+    rental_rate: string;
+    length: string;
+    replacement_cost: string;
+    rating: string;
+    last_update: string;
+    special_features: string[];
+    fulltext: string;
+};
+
+export interface FilmInput extends Optional<FilmAttibutes, 'film_id'>{};
+export interface FilmOutput extends Required<FilmAttibutes>{};
+
+class Film extends Model<FilmAttibutes, FilmInput> {
+    declare film_id: number;
+    declare title: string;
+    declare description: string;
+    declare release_year: string;
+    declare language_id: string;
+    declare rental_duration: string;
+    declare rental_rate: string;
+    declare length: string;
+    declare replacement_cost: string;
+    declare rating: string;
+    declare last_update: string;
+    declare special_features: string[];
+    declare fulltext: string;
+}
 
 Film.init({
 	film_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},

@@ -1,16 +1,33 @@
-import model from '../models/FilmModel';
+import model, { FilmInput, FilmOutput } from '../models/FilmModel';
 
-export const getAll = () => {
-    return model.findAll();
+export const getAll = async (): Promise<FilmOutput[]> => {
+    return await model.findAll();
 };
-export const getById = (id: number) => {
-    return model.findByPk(id);
+export const getById = async (id: number): Promise<FilmOutput> => {
+    const film = await model.findByPk(id);
+    
+    if(!film){
+        throw new Error('Register not found.');
+    }
+    return film;
 }
-export const create = (object: undefined) => {
-    return model.create(object);
+export const create = async (payload: FilmInput): Promise<FilmOutput> => {
+    return await model.create(payload);
 }
-/* export const update = (id: number, object: undefined) => {
-    return model.update(object, {
-        where: {film_id: id}
-    });
-}; */
+export const updateById = async (id: number, payload: FilmInput): Promise<FilmOutput> => {
+    const film = await model.findByPk(id);
+
+    if(!film){
+        throw new Error('Register not found.');
+    }
+    return await film.update(payload);
+};
+
+export const deleteById = async (id: number): Promise<void> => {
+    const film = await model.findByPk(id);
+
+    if(!film){
+        throw new Error('Register not found.');
+    }
+    await film.destroy();
+};
