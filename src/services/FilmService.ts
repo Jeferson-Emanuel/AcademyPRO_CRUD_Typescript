@@ -5,7 +5,11 @@ export const getAll = async (): Promise<FilmOutput[]> => {
     return await repository.getAll()
 };
 export const getById = async (id: number): Promise<FilmOutput> => {
-    return await repository.getById(id);
+    try {
+        return await repository.getById(id);        
+    } catch (error) {
+        throw error;
+    };
 };
 export const create = async (payload: FilmInput): Promise<FilmOutput> => {
     return await repository.create(payload);

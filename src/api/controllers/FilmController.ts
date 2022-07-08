@@ -5,7 +5,11 @@ export const getAll = async (): Promise<FilmOutput[]> => {
     return await service.getAll()
 };
 export const getById = async (id: number): Promise<FilmOutput> => {
-    return await service.getById(id);
+    try {
+        return await service.getById(id);        
+    } catch (error) {
+        throw error;
+    };
 };
 export const create = async (payload: FilmInput): Promise<FilmOutput> => {
     return await service.create(payload);

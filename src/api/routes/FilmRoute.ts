@@ -7,7 +7,12 @@ router.get('/', async (req: Request, res: Response) => {
     res.send(await controller.getAll());
 });
 router.get('/:id', async (req: Request, res: Response) => {
-    res.send(await controller.getById(parseInt(req.params.id)));
+    try {
+        res.send(await controller.getById(parseInt(req.params.id)));
+    } catch (error) {
+        res.end();
+        console.log(error);
+    };
 });
 router.post('/', async (req: Request, res: Response) => {
     res.status(201).send(await controller.create(req.body));
